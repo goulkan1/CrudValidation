@@ -48,11 +48,6 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Product findeOne(@PathVariable("id") Long id) {
-//        Optional<Product> product = productService.findOne(id);
-//        if (!product.isPresent()) {
-//            return null;
-//        }
-//        return product.get();
         return productService.findOne(id);
     }
 
