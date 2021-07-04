@@ -1,8 +1,9 @@
 package com.example.demo.controlers;
 
 import com.example.demo.dto.ResponseData;
+import com.example.demo.dto.SearchData;
 import com.example.demo.models.entities.Product;
-import com.example.demo.models.repos.ProductRepo;
+import com.example.demo.models.entities.Supplier;
 import com.example.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,13 +13,13 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/products")
 public class ProductController {
 
-    // TODO Controler memangil service, service memanggil controller
+    // TODO Controler memangil service, service memanggil repo
     @Autowired
     private ProductService productService;
 
@@ -72,5 +73,26 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteOne(@PathVariable("id") Long id) {
         productService.removeOne(id);
+    }
+
+    @PostMapping("/{id}")
+    public void addSupplier(@RequestBody Supplier supplier, @PathVariable("id") Long productId) {
+        productService.addSupplier(supplier, productId);
+
+    }
+
+    @PostMapping("/search/name")
+    public Product getProductByName(@RequestBody SearchData searchData) {
+        return productService.findByProductName(searchData.getSearchKey());
+    }
+
+    @PostMapping("/search/namelike")
+    public List<Product> getProductByNameLike(@RequestBody SearchData searchData) {
+        return productService.findByProductNameLike(searchData.getSearchKey());
+    }
+
+    @GetMapping("/search/category/{categoryId}")
+    public List<Product> getProductByCategory(@PathVariable("categoryId") Long categoryId) {
+        return productService.findByCategory(categoryId);
     }
 }
