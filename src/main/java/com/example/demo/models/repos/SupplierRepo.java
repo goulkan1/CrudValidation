@@ -5,6 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
+// Crud Repo
+// Paging Repo
+// Jpa Repo
 public interface SupplierRepo extends CrudRepository<Supplier, Long> {
 
     Supplier findByEmail(String email);
