@@ -1,6 +1,7 @@
 package com.example.demo.controlers;
 
 import com.example.demo.dto.ResponseData;
+import com.example.demo.dto.SearchData;
 import com.example.demo.dto.SupplierData;
 import com.example.demo.models.entities.Supplier;
 import com.example.demo.services.SupplierService;
@@ -13,6 +14,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/supplliers")
@@ -25,7 +27,7 @@ public class SuppllierController {
     private ModelMapper modelMapper;
 
     @PostMapping
-    private ResponseEntity<ResponseData<Supplier>> create(@Valid @RequestBody SupplierData supplierData, Errors errors) {
+    public ResponseEntity<ResponseData<Supplier>> create(@Valid @RequestBody SupplierData supplierData, Errors errors) {
 
         // KALO GAGAL DISINI
         ResponseData<Supplier> responseData = new ResponseData<>();
@@ -61,7 +63,7 @@ public class SuppllierController {
     }
 
     @PutMapping
-    private ResponseEntity<ResponseData<Supplier>> update(@Valid @RequestBody SupplierData supplierData, Errors errors) {
+    public ResponseEntity<ResponseData<Supplier>> update(@Valid @RequestBody SupplierData supplierData, Errors errors) {
 
         // KALO GAGAL DISINI
         ResponseData<Supplier> responseData = new ResponseData<>();
@@ -84,5 +86,25 @@ public class SuppllierController {
         responseData.setStatus(true);
         responseData.setPayload(supplierService.save(supplier));
         return ResponseEntity.ok(responseData);
+    }
+
+    @PostMapping("search/byemail")
+    public Supplier findByEmail(@RequestBody SearchData searchData) {
+        return supplierService.findByEmail(searchData.getSearchKey());
+    }
+
+    @PostMapping("search/name")
+    public List<Supplier> findByName(@RequestBody SearchData searchData) {
+        return supplierService.findByNameContainsOrderByIdDesc(searchData.getSearchKey());
+    }
+
+    @PostMapping("search/namestartwith")
+    public List<Supplier> findByNameStartWith(@RequestBody SearchData searchData) {
+        return supplierService.findByNameStartingWith(searchData.getSearchKey());
+    }
+
+    @PostMapping("search/bynameoremail")
+    public List<Supplier> findByNameContainsOrEmailContains(@RequestBody SearchData searchData) {
+        return supplierService.findByNameContainsOrEmailContains(searchData.getSearchKey(), searchData.getOtherSearchKey());
     }
 }

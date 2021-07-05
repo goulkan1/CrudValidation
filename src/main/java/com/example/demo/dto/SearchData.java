@@ -3,6 +3,16 @@ package com.example.demo.dto;
 public class SearchData {
     private String searchKey;
 
+    private String otherSearchKey;
+
+    public String getOtherSearchKey() {
+        return otherSearchKey;
+    }
+
+    public void setOtherSearchKey(String otherSearchKey) {
+        this.otherSearchKey = otherSearchKey;
+    }
+
     public String getSearchKey() {
         return searchKey;
     }
