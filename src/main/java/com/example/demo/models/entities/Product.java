@@ -1,7 +1,6 @@
 package com.example.demo.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -11,9 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tbl_product")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product implements Serializable {
 
     @Id
@@ -33,20 +30,22 @@ public class Product implements Serializable {
     private Category category;
 
     @ManyToMany
-    @JoinTable(name = "tbl_product_supplier",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "supplier_id"))
-//    @JsonManagedReference
+    @JoinTable(name = "tbl_product_supplier", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
+    // @JsonManagedReference
     private Set<Supplier> suppliers;
 
     public Product() {
     }
 
-    public Product(Long id, String name, String description, Double price) {
+    public Product(Long id, @NotEmpty(message = "Name is required") String name,
+            @NotEmpty(message = "Description is required") String description, Double price, Category category,
+            Set<Supplier> suppliers) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.category = category;
+        this.suppliers = suppliers;
     }
 
     public Long getId() {
@@ -96,4 +95,5 @@ public class Product implements Serializable {
     public void setSuppliers(Set<Supplier> suppliers) {
         this.suppliers = suppliers;
     }
+
 }

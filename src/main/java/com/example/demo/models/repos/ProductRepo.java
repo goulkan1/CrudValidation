@@ -2,11 +2,9 @@ package com.example.demo.models.repos;
 
 import com.example.demo.models.entities.Product;
 
-import com.example.demo.models.entities.Supplier;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import javax.swing.plaf.SpinnerUI;
 import javax.websocket.server.PathParam;
 import java.util.List;
 

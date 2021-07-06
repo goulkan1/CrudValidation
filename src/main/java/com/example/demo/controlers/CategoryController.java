@@ -7,7 +7,6 @@ import com.example.demo.models.entities.Category;
 import com.example.demo.services.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -77,14 +76,15 @@ public class CategoryController {
     }
 
     @PostMapping("/search/{size}/{page}")
-    public Iterable<Category> findByName(@RequestBody SearchData searchData, @PathVariable("size") int size, @PathVariable("page") int page) {
+    public Iterable<Category> findByName(@RequestBody SearchData searchData, @PathVariable("size") int size,
+            @PathVariable("page") int page) {
         Pageable pageable = PageRequest.of(page, size);
         return categoryService.findByName(searchData.getSearchKey(), pageable);
     }
 
     @PostMapping("/search/{size}/{page}/{sort}")
-    public Iterable<Category> findByName(@RequestBody SearchData searchData, @PathVariable("size") int size, @PathVariable("page")
-            int page, @PathVariable("sort") String sort) {
+    public Iterable<Category> findByName(@RequestBody SearchData searchData, @PathVariable("size") int size,
+            @PathVariable("page") int page, @PathVariable("sort") String sort) {
         // default asc
         Pageable pageable = PageRequest.of(page, size, Sort.by("id"));
         if (sort.equalsIgnoreCase("desc")) {

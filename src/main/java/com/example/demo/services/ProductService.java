@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.models.entities.Category;
 import com.example.demo.models.entities.Product;
 import com.example.demo.models.entities.Supplier;
 import com.example.demo.models.repos.ProductRepo;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
