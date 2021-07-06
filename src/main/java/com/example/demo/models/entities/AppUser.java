@@ -4,12 +4,21 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
 @Entity
 @Table(name = "tbl_users")
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class AppUser implements UserDetails {
 
     @Id
@@ -23,6 +32,9 @@ public class AppUser implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
+
+    private Boolean locked;
+    private Boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -58,42 +70,6 @@ public class AppUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public AppUserRole getAppUserRole() {
-        return appUserRole;
-    }
-
-    public void setAppUserRole(AppUserRole appUserRole) {
-        this.appUserRole = appUserRole;
     }
 
 }

@@ -27,9 +27,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable().authorizeRequests().antMatchers("/api/users/register").permitAll()
+        http.csrf().disable().authorizeRequests().antMatchers("/api/users/register", "/").permitAll().anyRequest()
+                .authenticated()
+                // login
+                .and().formLogin().permitAll().defaultSuccessUrl("/api/products")
                 // logout
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+                .and().logout().logoutUrl("/logout").clearAuthentication(true).invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID").logoutSuccessUrl("/login");
 
     }
 
