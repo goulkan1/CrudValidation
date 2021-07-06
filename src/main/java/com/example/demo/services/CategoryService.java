@@ -17,6 +17,13 @@ public class CategoryService {
     private CategoryRepo categoryRepo;
 
     public Category save(Category category) {
+        if (category.getId() != null) {
+            // informasi dari database siapa yang create kapan
+            Category currentCategory = categoryRepo.findById(category.getId()).get();
+            // merubah nama
+            currentCategory.setName(category.getName());
+            category = currentCategory;
+        }
         return categoryRepo.save(category);
     }
 
