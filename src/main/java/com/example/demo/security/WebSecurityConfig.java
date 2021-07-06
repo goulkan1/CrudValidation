@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -25,8 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // open register http security
     @Autowired
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/api/users/register").permitAll().anyRequest()
-                .fullyAuthenticated().and().httpBasic();
+
+        http.csrf().disable().authorizeRequests().antMatchers("/api/users/register").permitAll()
+                // logout
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+
     }
 
     @Override
