@@ -57,7 +57,6 @@ public class AppUsersController {
         AppUser appUser = modelMapper.map(appUserData, AppUser.class);
         response.setPayload(appUserService.registerAppUser(appUser));
         response.setStatus(true);
-        response.setStatus(true);
         response.getMessage().add("AppUser saved!");
         return ResponseEntity.ok(response);
     }
