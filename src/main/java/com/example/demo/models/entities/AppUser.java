@@ -33,6 +33,7 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
 
+    // private Collection<? extends GrantedAuthority> authorities;
     private Boolean locked;
     private Boolean enabled;
 

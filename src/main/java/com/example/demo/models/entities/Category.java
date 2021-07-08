@@ -2,8 +2,6 @@ package com.example.demo.models.entities;
 
 import javax.persistence.*;
 
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
